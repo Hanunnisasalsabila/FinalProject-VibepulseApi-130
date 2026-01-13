@@ -64,7 +64,7 @@ Tampilan Saat Musik Di Putar
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e1c667d3-ccf1-40fe-8769-4770226ef5ec" />
 
 Akan Muncul Sound Bar yang Mengikuti Dentuman Musiknya
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e00504a9-335f-4bed-9408-d5bd5e550c13" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1c009a5e-94a2-41ab-9b02-4e4f1b2bef82" />
 
 Tampilan Saat Menambah Musik
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1c009a5e-94a2-41ab-9b02-4e4f1b2bef82" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e00504a9-335f-4bed-9408-d5bd5e550c13" />
