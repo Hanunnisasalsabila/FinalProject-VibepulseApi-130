@@ -260,7 +260,7 @@ const startServer = async () => {
         setupAssociations();
 
         // 3. Sync database (create tables if not exist)
-        await sequelize.sync({ alter: true });
+        await sequelize.sync();
         console.log('✅ Database tables synchronized');
 
         // 4. Create upload directories

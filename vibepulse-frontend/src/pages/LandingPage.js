@@ -7,29 +7,6 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const canvasRef = useRef(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [scrollY, setScrollY] = useState(0);
-
-  // Mouse tracking for parallax
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePos({
-        x: (e.clientX / window.innerWidth) * 20 - 10,
-        y: (e.clientY / window.innerHeight) * 20 - 10
-      });
-    };
-
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   // Animated night sky
   useEffect(() => {
@@ -60,18 +37,10 @@ const LandingPage = () => {
       clouds.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height * 0.6,
+        width: Math.random() * 300 + 200, // Tambahkan ini buat ukuran gumpalan
+        height: Math.random() * 80 + 50,  // Tambahkan ini buat tinggi gumpalan
         speed: Math.random() * 0.3 + 0.1,
-        opacity: Math.random() * 0.15 + 0.1,
-        // Multiple circles to make fluffy cloud shape
-        circles: [
-          { offsetX: 0, offsetY: 0, radius: 50 + Math.random() * 20 },
-          { offsetX: 40, offsetY: -10, radius: 40 + Math.random() * 15 },
-          { offsetX: -40, offsetY: -5, radius: 45 + Math.random() * 15 },
-          { offsetX: 70, offsetY: 5, radius: 35 + Math.random() * 10 },
-          { offsetX: -70, offsetY: 10, radius: 38 + Math.random() * 10 },
-          { offsetX: 20, offsetY: 15, radius: 42 + Math.random() * 12 },
-          { offsetX: -20, offsetY: 20, radius: 40 + Math.random() * 10 }
-        ]
+        opacity: Math.random() * 0.1 + 0.05
       });
     }
 
@@ -142,24 +111,28 @@ const LandingPage = () => {
     // DRAW FLUFFY CLOUDS!
     function drawClouds() {
       clouds.forEach(cloud => {
-        ctx.fillStyle = `rgba(255, 255, 255, ${cloud.opacity})`;
+        ctx.save();
+        ctx.globalAlpha = cloud.opacity;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
         
-        // Draw multiple overlapping circles to create fluffy cloud
-        cloud.circles.forEach(circle => {
-          ctx.beginPath();
-          ctx.arc(
-            cloud.x + circle.offsetX,
-            cloud.y + circle.offsetY,
-            circle.radius,
-            0,
-            Math.PI * 2
-          );
-          ctx.fill();
-        });
+        // Menggambar 3 gumpalan utama membentuk awan
+        // Kiri
+        ctx.arc(cloud.x, cloud.y, cloud.width * 0.3, 0, Math.PI * 2);
+        // Tengah (agak naik)
+        ctx.arc(cloud.x + cloud.width * 0.3, cloud.y - cloud.height * 0.2, cloud.width * 0.35, 0, Math.PI * 2);
+        // Kanan
+        ctx.arc(cloud.x + cloud.width * 0.6, cloud.y, cloud.width * 0.3, 0, Math.PI * 2);
         
+        ctx.fill();
+        ctx.restore();
+
+        // Gerakkan awan
         cloud.x += cloud.speed;
-        if (cloud.x > canvas.width + 150) {
-          cloud.x = -150;
+        // Reset posisi kalau sudah lewat layar kanan
+        if (cloud.x > canvas.width + cloud.width) {
+          cloud.x = -cloud.width;
+          cloud.y = Math.random() * canvas.height * 0.6;
         }
       });
     }
@@ -224,8 +197,8 @@ const LandingPage = () => {
       <div 
         className="fixed top-20 right-20 w-40 h-40 bg-gradient-to-br from-[#fef3c7] to-[#fde68a] rounded-full opacity-80 blur-sm animate-pulse-slow pointer-events-none"
         style={{
-          transform: `translate(${mousePos.x}px, ${mousePos.y}px) translateY(${scrollY * 0.2}px)`,
           boxShadow: '0 0 120px 50px rgba(254, 243, 199, 0.3)'
+          // ✅ Transform dihapus, bulan jadi diam total
         }}
       />
 
@@ -290,7 +263,7 @@ const LandingPage = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-lg border border-blue-500/30 rounded-full mb-6 animate-fade-in">
               <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" />
-              <span className="text-sm text-blue-200">Now Playing: 100+ Curated Tracks</span>
+              <span className="text-sm text-blue-200">Hanun Nisa Salsabila - 130</span>
             </div>
 
             <h1 className="text-6xl lg:text-7xl font-bold mb-6 leading-tight">
@@ -301,7 +274,7 @@ const LandingPage = () => {
             </h1>
 
             <p className="text-xl text-gray-300 mb-8 leading-relaxed max-w-xl">
-              Akses koleksi musik indie yang sempurna untuk coding, studying, dan deep focus sessions. 
+              Akses koleksi musik indie yang sempurna untuk menemani coding, studying, dan deep focus sessions. 
               <span className="text-blue-300"> Dengerin musik di bawah bintang ✨</span>
             </p>
 
@@ -348,8 +321,7 @@ const LandingPage = () => {
           <div 
             className="relative animate-fade-in-up"
             style={{ 
-              animationDelay: '0.2s',
-              transform: `translateY(${scrollY * 0.1}px)` 
+              animationDelay: '0.2s' 
             }}
           >
             <div className="relative bg-gradient-to-br from-blue-950/40 via-blue-900/30 to-slate-900/30 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 shadow-2xl overflow-hidden">
@@ -374,16 +346,22 @@ const LandingPage = () => {
 
                 {/* Waveform Visualization */}
                 <div className="flex items-end justify-between gap-1 h-20 mb-6">
-                  {[...Array(40)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="flex-1 bg-gradient-to-t from-blue-700 to-sky-500 rounded-full animate-sound-wave opacity-70"
-                      style={{
-                        height: `${Math.random() * 100}%`,
-                        animationDelay: `${i * 0.05}s`
-                      }}
-                    />
-                  ))}
+                  {[...Array(40)].map((_, i) => {
+                    // ✅ Trik Matematika: Gunakan 'i' (index) biar tingginya acak tapi KONSISTEN.
+                    // Jadi bar ke-1 tingginya akan selalu sama, tidak berubah pas scroll.
+                    const stableRandomHeight = Math.max(20, (i * 1337 + i * i) % 100); 
+                    
+                    return (
+                      <div
+                        key={i}
+                        className="flex-1 bg-gradient-to-t from-blue-700 to-sky-500 rounded-full animate-sound-wave opacity-70"
+                        style={{
+                          height: `${stableRandomHeight}%`, // ✅ Pakai tinggi stabil
+                          animationDelay: `${i * 0.05}s`
+                        }}
+                      />
+                    );
+                  })}
                 </div>
 
                 {/* Info Cards */}
@@ -521,7 +499,7 @@ const response = await fetch(
   'https://api.vibepulse.dev/songs?mood=focus',
   {
     headers: {
-      'Authorization': 'Bearer YOUR_API_KEY'
+      'x-api-key': 'YOUR_API_KEY'
     }
   }
 );
@@ -575,7 +553,7 @@ console.log(data.tracks);`}
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full mb-6">
                 <FaGithub className="text-blue-300" />
-                <span className="text-sm text-blue-200">Join 1000+ developers</span>
+                <span className="text-sm text-blue-200">Join With Me!!</span>
               </div>
 
               <h2 className="text-5xl font-bold mb-6 animate-text-shimmer bg-gradient-to-r from-white via-blue-200 to-white bg-[length:200%_auto] bg-clip-text text-transparent">
@@ -583,7 +561,7 @@ console.log(data.tracks);`}
               </h2>
               
               <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-                Dapetin API key gratis dan mulai streaming curated music dalam 60 detik. No credit card required.
+                Dapetin API key gratis dan mulai streaming curated music. No credit card required.
               </p>
 
               <button
@@ -617,7 +595,7 @@ console.log(data.tracks);`}
             <div className="flex items-center gap-6 text-sm text-gray-400">
               <Link to="/docs" className="hover:text-white transition-colors">Docs</Link>
               <span>•</span>
-              <span>Made with ❤️ by Hanun Nisa Salsabila</span>
+              <span>Made by Hanun Nisa Salsabila</span>
             </div>
           </div>
         </div>
