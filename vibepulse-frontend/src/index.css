@@ -1,0 +1,349 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#0f172a] text-white;
+  }
+}
+
+@layer components {
+  /* Button Styles - Midnight Theme */
+  .btn {
+    @apply px-4 py-2 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:from-purple-600 hover:to-purple-700 shadow-lg shadow-purple-500/50;
+  }
+  
+  .btn-secondary {
+    @apply bg-white/10 text-white hover:bg-white/20 border border-white/20;
+  }
+  
+  /* Card Styles - Glassmorphism */
+  .card {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-all;
+  }
+  
+  /* Input Styles - Dark Theme */
+  .input {
+    @apply w-full px-4 py-3 bg-white/5 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:border-purple-400 focus:outline-none focus:ring-2 focus:ring-purple-400/50 transition-all;
+  }
+  
+  /* Badge Styles - Midnight Theme */
+  .badge {
+    @apply px-3 py-1 rounded-full text-sm font-semibold border;
+  }
+  
+  .badge-success {
+    @apply bg-green-500/20 text-green-300 border-green-400/30;
+  }
+  
+  .badge-warning {
+    @apply bg-yellow-500/20 text-yellow-300 border-yellow-400/30;
+  }
+  
+  .badge-danger {
+    @apply bg-red-500/20 text-red-300 border-red-400/30;
+  }
+  
+  .badge-info {
+    @apply bg-blue-500/20 text-blue-300 border-blue-400/30;
+  }
+}
+
+/* Custom Scrollbar - Midnight Theme */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  border-radius: 10px;
+  border: 2px solid rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #7c3aed, #9333ea);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #8b5cf6 rgba(15, 23, 42, 0.5);
+}
+
+/* Animations - Midnight Theme */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-10px); 
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { 
+    opacity: 0.3; 
+  }
+  50% { 
+    opacity: 1; 
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { 
+    opacity: 0.6; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 0.8; 
+    transform: scale(1.05); 
+  }
+}
+
+@keyframes text-shimmer {
+  0% { 
+    background-position: -200% center; 
+  }
+  100% { 
+    background-position: 200% center; 
+  }
+}
+
+@keyframes spin-slow {
+  from { 
+    transform: rotate(0deg); 
+  }
+  to { 
+    transform: rotate(360deg); 
+  }
+}
+
+@keyframes spin-reverse {
+  from { 
+    transform: rotate(360deg); 
+  }
+  to { 
+    transform: rotate(0deg); 
+  }
+}
+
+@keyframes fade-in {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slide-in {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { 
+    transform: translateY(0); 
+  }
+  50% { 
+    transform: translateY(-5px); 
+  }
+}
+
+@keyframes sound-bar {
+  0%, 100% { 
+    height: 40px; 
+  }
+  50% { 
+    height: 100px; 
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Animation Classes */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-text-shimmer {
+  animation: text-shimmer 3s linear infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 1.5s linear infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.animate-slide-in {
+  animation: slide-in 1s ease-out;
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+.animate-sound-bar {
+  animation: sound-bar 0.8s ease-in-out infinite;
+}
+
+.animate-ripple {
+  animation: ripple 0.6s ease-out;
+}
+
+/* Skeleton Loader - Dark Theme */
+.skeleton {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    to right, 
+    rgba(255, 255, 255, 0.05) 4%, 
+    rgba(255, 255, 255, 0.1) 25%, 
+    rgba(255, 255, 255, 0.05) 36%
+  );
+  background-size: 1000px 100%;
+}
+
+/* Selection Color - Purple Theme */
+::selection {
+  background-color: rgba(139, 92, 246, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: rgba(139, 92, 246, 0.3);
+  color: white;
+}
+
+/* Focus Outline - Purple Theme */
+*:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent horizontal scroll */
+body {
+  overflow-x: hidden;
+}
+
+/* Toast Container Styles - Dark Theme */
+.Toastify__toast {
+  @apply bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-xl;
+}
+
+.Toastify__toast--success {
+  @apply border-green-400/30;
+}
+
+.Toastify__toast--error {
+  @apply border-red-400/30;
+}
+
+.Toastify__toast--info {
+  @apply border-blue-400/30;
+}
+
+.Toastify__toast--warning {
+  @apply border-yellow-400/30;
+}
+
+.Toastify__progress-bar {
+  @apply bg-gradient-to-r from-purple-500 to-purple-600;
+}
+
+/* Custom Utilities */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+}
+
+.bg-gradient-success {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+}
+
+.text-gradient {
+  @apply bg-gradient-to-r from-purple-300 via-pink-300 to-purple-300 bg-clip-text text-transparent;
+}
+
+/* Glassmorphism Utility */
+.glass {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10;
+}
+
+.glass-hover {
+  @apply glass hover:bg-white/10 transition-all;
+}
+
+/* Responsive Font Sizes */
+@media (max-width: 640px) {
+  h1 {
+    @apply text-3xl;
+  }
+  
+  h2 {
+    @apply text-2xl;
+  }
+  
+  h3 {
+    @apply text-xl;
+  }
+}
